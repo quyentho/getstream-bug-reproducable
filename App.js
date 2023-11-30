@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StreamCall,
+  StreamVideo,
+  StreamVideoClient,
+  User,
+} from "@stream-io/video-react-native-sdk";
+import { useEffect, useState } from "react";
+
+const apiKey = "your-api-key";
+const userId = "user-id";
+const token = "authentication-token";
+const callId = "my-call-id";
+const user = { id: userId };
+
+const client = new StreamVideoClient({ apiKey, user, token });
+const call = client.call("default", callId);
+call.join({ create: true });
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <StreamVideo client={client}>
+      <StreamCall call={call}>{/* Your UI */}</StreamCall>
+    </StreamVideo>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
